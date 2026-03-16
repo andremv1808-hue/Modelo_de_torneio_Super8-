@@ -7,13 +7,19 @@ app = Flask(__name__)
 from routes import *
 
 
-wb = openpyxl.open('Pasta1.xlsx')
+wb = openpyxl.open('Pasta1project.xlsx')
 workbook = wb['Planilha1']
 
 
 
 if __name__ == ("__main__"):
     app.run()
+
+
+
+
+
+
 
 
 
