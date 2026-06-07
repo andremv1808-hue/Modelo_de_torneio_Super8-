@@ -13,6 +13,7 @@ def reqplayers():
 def super8():
     database = connect_db()
     for i in range(8):
+        i = i+1
         x = "jogador"+str(i)
         nome = request.form[x]
         database.execute("INSERT INTO jogadores (nome) VALUES (?)", (nome,))
