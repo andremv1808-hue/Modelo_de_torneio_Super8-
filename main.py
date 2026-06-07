@@ -15,10 +15,10 @@ def super8():
     for i in range(8):
         x = "jogador"+str(i)
         nome = request.form[x]
-        database.execute("INSERT INTO jogares (nome) VALUES (?)", (nome,))
+        database.execute("INSERT INTO jogadores (nome) VALUES (?)", (nome,))
         database.commit()
 
-    cursor = database.execute("SELECT * FROM jogares")
+    cursor = database.execute("SELECT * FROM jogadores")
     player = cursor.fetchall()
     
     return render_template("torneio.html", player=player)
@@ -26,7 +26,7 @@ def super8():
 @app.route("/encerrar", methods = ['GET'])
 def func_button():
     database = connect_db()
-    database.execute("DELETE FROM jogares")
+    database.execute("DELETE FROM jogadores")
     database.commit()
 
     return redirect(url_for('reqplayers'))
