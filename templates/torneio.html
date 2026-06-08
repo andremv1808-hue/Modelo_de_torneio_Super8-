@@ -1,5 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/973a8ca623.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/torneio.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container-elementosheader">
+        <div class="container-textosheader">
+            <a href="">Home</a>
+            <a href="">Apoie</a>
+            <a href="">Sobre</a>
+            <a href="">Contato</a>
+        </div>
+        <div class="container-icone"><i class="fa-solid fa-code"></i></div>
+    </div>
+    </header>
+    <main>
+        <div>
+            <div class="container-button-top">
+                <button class="button-jogos">JOGOS</button>
+                <button class="button-rank">RANKING</button>
+            </div>
+            <table>
+                <tr>
+                    <th class="border-radiusUL">Jogo</th>
+                    <th>Equipe 1</th>
+                    <th>Resultado</th>
+                    <th class="border-radiusUR">Equipe 2</th>
+                </tr>
+                <tr>
+                    <td>01</td>
+                    <td>{{player[0][0]}} & {{player[7][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[6][0]}} & {{player[4][0]}}</td>
+                </tr>
+                <tr>
+                    <td>02</td>
+                    <td>{{player[3][0]}} & {{player[1][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[2][0]}} & {{player[5][0]}}</td>
+                </tr>
+                <tr>
+                    <td>03</td>
+                    <td>{{player[0][0]}} & {{player[6][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[1][0]}} & {{player[2][0]}}</td>
+                </tr>
+                <tr>
+                    <td>04</td>
+                    <td>{{player[7][0]}} & {{player[4][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[3][0]}} & {{player[5][0]}}</td>
+                </tr>
+                <tr>
+                    <td>05</td>
+                    <td>{{player[0][0]}} & {{player[2][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[7][0]}} & {{player[5][0]}}</td>
+                </tr>
+                <tr>
+                    <td>06</td>
+                    <td>{{player[6][0]}} & {{player[1][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[4][0]}} & {{player[3][0]}}</td>
+                </tr>
+                <tr>
+                    <td>07</td>
+                    <td>{{player[0][0]}} & {{player[4][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[3][0]}} & {{player[2][0]}}</td>
+                </tr>
+                <tr>
+                    <td>08</td>
+                    <td>{{player[7][0]}} & {{player[6][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[1][0]}} & {{player[5][0]}}</td>
+                </tr>
+                <tr>
+                    <td>09</td>
+                    <td>{{player[0][0]}} & {{player[1][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[7][0]}} & {{player[3][0]}}</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>{{player[6][0]}} & {{player[2][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[4][0]}} & {{player[5][0]}}</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>{{player[0][0]}} & {{player[3][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[6][0]}} & {{player[5][0]}}</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>{{player[7][0]}} & {{player[1][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[4][0]}} & {{player[2][0]}}</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td>{{player[7][0]}} & {{player[2][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td>{{player[6][0]}} & {{player[3][0]}}</td>
+                </tr>
+                <tr>
+                    <td class="border-radiusDL">14</td>
+                    <td>{{player[0][0]}} & {{player[5][0]}}</td>
+                    <td><input type="number"> X <input type="number"></td>
+                    <td class="border-radiusDR">{{player[4][0]}} & {{player[1][0]}}</td>
+                </tr>
+            </table>
+            <form action="/encerrar">
+                <button type="submit" method="get" class="button-end">Encerrar super 8!</button>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
+
+
+
+
+
+
+<!-- TUDO FUNCIONANDO NORMAL -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,4 +244,4 @@
 
 
 </body>
-</html>
+</html> -->
