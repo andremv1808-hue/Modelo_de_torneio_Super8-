@@ -1,5 +1,6 @@
 from flask import Flask, render_template,request, url_for, redirect
 from database import *
+import random
 
 
 app = Flask(__name__)
@@ -20,7 +21,15 @@ def super8():
         database.commit()
 
     cursor = database.execute("SELECT * FROM jogadores")
-    player = cursor.fetchall()
+    players_db = cursor.fetchall()
+    player = []
+
+    for players in players_db:
+        player.append(players)
+
+    random.shuffle(player)
+
+    
     
     return render_template("torneio.html", player=player)
     
