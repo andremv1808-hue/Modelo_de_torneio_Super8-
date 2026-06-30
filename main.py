@@ -6,32 +6,6 @@ import random
 app = Flask(__name__)
 
 
-'''defs'''
-def generate_rank():
-    rank = []
-    database = connect_db()
-    cursor = database.cursor()
-    
-    temp = 3
-
-    database.execute("UPDATE jogadores SET pontos = ?", (3,))
-
-    database.execute("SELECT pontos FROM jogadores ")
-    pontuacoes = cursor.fetchall()
-
-    for ponto in pontuacoes:
-        rank.append(ponto)
-
-    rank.sort()
-
-    rank_jogadores = []
-
-    for ponto in rank:
-        database.execute("SELECT nome FROM jogadores WHERE pontos (?)", (ponto,))
-        jogador = cursor.fetchone()[0]
-        rank_jogadores.append(jogador)
-
-    return rank_jogadores 
 
 
 '''routes'''
@@ -64,31 +38,14 @@ def super8():
         database.execute("INSERT INTO jogadores (id, nome) VALUES (?,?)", (str(i),players,))
         database.commit()
 
-    rank = []
     
     cursor.execute("UPDATE jogadores SET pontos = ?", (3,))
     database.commit()
 
-    database.execute("SELECT pontos FROM jogadores ")
-    pontuacoes = cursor.fetchall()
-    print(pontuacoes)
-
-    for ponto in pontuacoes:
-        rank.append(ponto)
-
-    rank.sort()
-    print(rank)
-
-    rank_jogadores = []
-
-    for ponto in rank:
-        database.execute("SELECT nome FROM jogadores WHERE pontos (?)", (ponto,))
-        jogador = cursor.fetchone()[0]
-        rank_jogadores.append(jogador)
 
 
 
-    return render_template("torneio.html", player=player, rank_jogadores = rank_jogadores)
+    return render_template("torneio.html", player=player, rank_jogadores = None)
  
 
 @app.route("/encerrar", methods = ['GET'])
@@ -101,28 +58,30 @@ def func_button():
 
 @app.route("/refresh", methods = ['POST', 'GET'])
 def button_refresh():
-    rank = []
     database = connect_db()
     cursor = database.cursor()
-    
-    database.execute("INSERT INTO jogadores (pontos) VALUES (?)", (3,))
-
-    database.execute("SELECT pontos FROM jogadores ")
-    pontuacoes = cursor.fetchall()
-
-    for ponto in pontuacoes:
-        rank.append(ponto)
-
-    rank.sort()
 
     rank_jogadores = []
 
-    for ponto in rank:
-        database.execute("SELECT nome FROM jogadores WHERE pontos (?)", (ponto,))
-        jogador = cursor.fetchone()[0]
-        rank_jogadores.append(jogador)
+    player = []
 
-    return redirect(url_for('/sup8'), rank_jogadores = rank_jogadores)
+    cursor.execute("SELECT nome FROM jogadores")
+    players_on_data = cursor.fetchall()
+
+    for players in players_on_data:
+        player.append(players[0])
+
+    cursor.execute("SELECT pontos FROM jogadores ")
+    pontuacoes = cursor.fetchall()
+
+    
+
+    for ponto in pontuacoes:
+        rank_jogadores.append(ponto[0])
+
+    rank_jogadores.sort() # ordenate the list from the smallest to the largest
+
+    return render_template("torneio.html",rank_jogadores = rank_jogadores, player = player)
     
 '''init'''
 if __name__ == ("__main__"):
