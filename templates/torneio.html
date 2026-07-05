@@ -27,10 +27,6 @@
     </header>
     <main>
         <div>
-            <!-- <div class="container-button-top">
-                <button class="button-jogos">JOGOS</button>
-                <button class="button-rank">RANKING</button>
-            </div> -->
             <div class="container-tables">
                 <div class="container-table1">
                     <form action="/refresh" method="post">
@@ -202,67 +198,67 @@
                         </tr>
                         <tr>
                             <td class="first">01</td>
+                            <td>{{rank_jogadores[0]}}</td>
                             <td>-00</td>
                             <td>-00</td>
-                            <td>-00</td>
-                            <td>{{ rank_jogadores[0] }}</td>
-                            <td>-00</td>
+                            <td>{{ rank_pontos[7] }}</td>
+                            <td>{{ rank_vitorias[0] }}</td>
                         </tr>
                         <tr>
                             <td class="second">02</td>
+                            <td>{{rank_jogadores[1]}}</td>
                             <td>-00</td>
                             <td>-00</td>
-                            <td>-00</td>
-                            <td>{{ rank_jogadores[1] }}</td>
-                            <td>-00</td>
+                            <td>{{ rank_pontos[6] }}</td>
+                            <td>{{ rank_vitorias[1] }}</td>
                         </tr>
                         <tr>
                             <td class="third">03</td>
+                            <td>{{rank_jogadores[2]}}</td>
                             <td>-00</td>
                             <td>-00</td>
-                            <td>-00</td>
-                            <td>{{ rank_jogadores[2] }}</td>
-                            <td>-00</td>
+                            <td>{{ rank_pontos[5] }}</td>
+                            <td>{{ rank_vitorias[2] }}</td>
                         </tr>
                         <tr>
                             <td>04</td>
+                            <td>{{rank_jogadores[3]}}</td>
                             <td>-00</td>
                             <td>-00</td>
-                            <td>-00</td>
-                            <td>{{ rank_jogadores[3] }}</td>
-                            <td>-00</td>
+                            <td>{{ rank_pontos[4] }}</td>
+                            <td>{{ rank_vitorias[3] }}</td>
                         </tr>
                         <tr>
                             <td>05</td>
+                            <td>{{rank_jogadores[4]}}</td>
                             <td>-00</td>
                             <td>-00</td>
-                            <td>-00</td>
-                            <td>{{ rank_jogadores[4] }}</td>
-                            <td>-00</td>
+                            <td>{{ rank_pontos[3] }}</td>
+                            <td>{{ rank_vitorias[4] }}</td>
                         </tr>
                         <tr>
                             <td>06</td>
+                            <td>{{rank_jogadores[5]}}</td>
                             <td>-00</td>
                             <td>-00</td>
-                            <td>-00</td>
-                            <td>{{ rank_jogadores[5] }}</td>
-                            <td>-00</td>
+                            <td>{{ rank_pontos[2] }}</td>
+                            <td>{{ rank_vitorias[5] }}</td>
                         </tr>
                         <tr>
                             <td>07</td>
+                            <td>{{rank_jogadores[6]}}</td>
                             <td>-00</td>
                             <td>-00</td>
-                            <td>-00</td>
-                            <td>{{ rank_jogadores[6] }}</td>
-                            <td>-00</td>
+                            <td>{{ rank_pontos[1] }}</td>
+                            <td>{{ rank_vitorias[6] }}</td>
                         </tr>
                         <tr>
                             <td class="border-radiusDL">08</td>
+                            <td>{{rank_jogadores[7]}}</td>
                             <td>-00</td>
                             <td>-00</td>
-                            <td>-00</td>
-                            <td>{{ rank_jogadores[7] }}</td>
-                            <td class="border-radiusDR">-00</td>
+                            <td>{{ rank_pontos[0] }}</td>
+                            <td class="border-radiusDR">{{ rank_vitorias[7] }}</td>
                         </tr>
                     </table>
                 </div>
@@ -272,117 +268,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-<!-- TUDO FUNCIONANDO NORMAL -->
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
-    <h1>Obrigado</h1>
-
-    <div class="container-jogos">
-        <span>{{ player[0][0] }} & {{ player[7][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[6][0] }} & {{ player[4][0] }}</span>
-        <hr>
-        <span>{{ player[3][0] }} & {{ player[1][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[2][0] }} & {{ player[5][0] }}</span>
-        <hr>
-        <span>{{ player[0][0] }} & {{ player[6][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[1][0] }} & {{ player[2][0] }}</span>
-        <hr>
-        <span>{{ player[7][0] }} & {{ player[4][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[3][0] }} & {{ player[5][0] }}</span>
-        <hr>
-        <span>{{ player[0][0] }} & {{ player[2][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[7][0] }} & {{ player[5][0] }}</span>
-        <hr>
-        <span>{{ player[6][0] }} & {{ player[1][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[4][0] }} & {{ player[3][0] }}</span>
-        <hr>
-        <span>{{ player[0][0] }} & {{ player[4][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[3][0] }} & {{ player[2][0] }}</span>
-        <hr>
-        <span>{{ player[7][0] }} & {{ player[6][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[1][0] }} & {{ player[5][0] }}</span>
-        <hr>
-        <span>{{ player[0][0] }} & {{ player[1][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[7][0] }} & {{ player[3][0] }}</span>
-        <hr>
-        <span>{{ player[6][0] }} & {{ player[2][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[4][0] }} & {{ player[5][0] }}</span>
-        <hr>
-        <span>{{ player[0][0] }} & {{ player[3][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[6][0] }} & {{ player[5][0] }}</span>
-        <hr>
-        <span>{{ player[7][0] }} & {{ player[1][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[4][0] }} & {{ player[2][0] }}</span>
-        <hr>
-        <span>{{ player[7][0] }} & {{ player[2][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[6][0] }} & {{ player[3][0] }}</span>
-        <hr>
-        <span>{{ player[0][0] }} & {{ player[5][0] }}</span>
-        <input type="number">
-        <span>xXx</span>
-        <input type="number">
-        <span>{{ player[4][0] }} & {{ player[1][0] }}</span>
-        <hr>
-    </div>
-
-    <form action="/encerrar">
-        <button type="submit" method="get">Resetar</button>
-    </form>
-
-
-
-</body>
-</html> -->

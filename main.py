@@ -6,27 +6,12 @@ import random
 app = Flask(__name__)
 
 
-'''defs'''
-# def generate_rank(results_int:list,new_idden_ids:list, database = None):
-#     if database is None:
-#         database = connect_db()
-
-#     cursor = database.cursor()  
-    
-#     for num in range(len(new_idden_ids)):
-        
-#         cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)", (new_idden_ids[num][0],new_idden_ids[num][1]))
-
-#         somar_com = cursor.fetchall()
-#         print(somar_com)
-#         for i in range(len(somar_com)):
-#             database.execute("UPDATE jogadores SET pontos = ? WHERE nome IN (?,?)", (results_int[num] + somar_com[i], new_idden_ids[num][i]))
-
-#         database.commit()
-
 '''routes'''
 @app.route("/")
 def reqplayers():
+    database = connect_db()
+    database.execute("DELETE FROM jogadores")
+    database.commit()
     return render_template("reqplayers.html")
 
 @app.route("/sup8", methods = ["POST"])
@@ -34,7 +19,8 @@ def super8():
     init_db()
     database = connect_db()
     cursor = database.cursor()
-
+    just_to_fill = ["A definir","A definir","A definir","A definir","A definir","A definir","A definir","A definir"]
+    just_to_fill2 = [0,0,0,0,0,0,0,0]
 
 
     player = []
@@ -54,12 +40,13 @@ def super8():
         database.commit()
 
     database.execute("UPDATE jogadores SET pontos = ?", (0,))
+    database.execute("UPDATE jogadores SET vitorias = ?", (0,))
     database.commit()
     
     cursor.execute("SELECT pontos FROM jogadores")
-    rank_jogadores = cursor.fetchall()
+    rank_pontos = cursor.fetchall()
 
-    return render_template("torneio.html", player=player, rank_jogadores = rank_jogadores[0])
+    return render_template("torneio.html", player=player, rank_pontos = rank_pontos[0], rank_jogadores = just_to_fill, rank_vitorias = just_to_fill2)
  
 
 
@@ -81,7 +68,7 @@ def button_refresh():
     database = connect_db()
     cursor = database.cursor()
 
-# RETORNANDO OS PLAYERS DO BANCO PARA QUE O HTML NAO PERCA ESTES DADOS 
+# RETORNANDO OS PLAYERS DO BANCO DE DADOS PARA QUE O HTML NAO PERCA ESTES DADOS 
     player = []
     cursor.execute("SELECT nome FROM jogadores")
     players_on_data = cursor.fetchall()
@@ -106,6 +93,48 @@ def button_refresh():
 
     hidden_ids = novas_sublistas
 
+# ATUALIZA O BANCO DE DADOS COM A SOMA DA VITORIA DE CADA UM, SE FOR EMPATE NAO SOMA NADA
+    ''' 
+    Temos a lista de resultados que retorna 28 numeros, todos de forma padrao de lista [] sem ser separado por outra lista
+
+    Temos a lista hidden_ids que retorna 28 lista, todas com 2 nomes dentro [[x,x], [x,x]...]
+
+    -TEMOS QUE
+
+    checar qual o maior, o result [0] e o result [1], se o result[0] for maior deve ser somado 1 as vitorias dos nomes na lista hidden_ids[0][0] e hidden ids[0][1]
+
+    depois -> result[2] > result[3] _ se sim -> adiciona 1 na vitoria do hidden ids[1][0] e hidden ids[1][1]
+    '''
+    for num in range(0,len(hidden_ids), 2):
+        if results[num] == results[num+1]:
+            print("OI")
+            continue
+        elif results[num] > results[num+1]:
+            print("OLA")
+            cursor.execute("SELECT nome FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num][0], hidden_ids[num][1]))
+            nomes = cursor.fetchall()
+
+            cursor.execute("SELECT vitorias FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num][0], hidden_ids[num][1]))
+            vitorias = cursor.fetchall()
+            print(vitorias)
+
+            for i in range(2):
+                database.execute("UPDATE jogadores SET vitorias = ? WHERE nome = ?", (1 + int(vitorias[i][0]), nomes[i][0]))
+            database.commit()
+        else:
+            cursor.execute("SELECT nome FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num + 1][0], hidden_ids[num + 1][1]))
+            nomes = cursor.fetchall()
+
+            cursor.execute("SELECT vitorias FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num + 1][0], hidden_ids[num + 1][1]))
+            vitorias = cursor.fetchall()
+            print(vitorias)
+
+            for i in range(2):
+                database.execute("UPDATE jogadores SET vitorias = ? WHERE nome = ?", (1 + int(vitorias[i][0]), nomes[i][0]))
+            database.commit()
+
+
+
 # RECEBE OS PONTOS NO BANCO DE DADOS EM FORMA DE LISTA []
     cursor.execute("SELECT pontos FROM jogadores")
     pontos_on_data = cursor.fetchall() #lista com os pontos em tuplas
@@ -115,28 +144,46 @@ def button_refresh():
 
 # ATUALIZA O BANCO DE DADOS COM A SOMA DAS PONTUACOES
     for num in range(28):
-        for i in range(2):
-            cursor.execute("SELECT nome FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
-            nome = cursor.fetchall()
-            cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
-            ponto = cursor.fetchall()
+        cursor.execute("SELECT nome FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
+        nome = cursor.fetchall()
+        cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
+        ponto = cursor.fetchall()
 
+        for i in range(2):
             database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?",(results[num] + int(ponto[i][0]), nome[i][0]))
 
         database.commit()
 
 # COLOCA O RANK DO MAIOR PARA O MENOR
-    rank_jogadores = []
+    rank_pontos = []
     cursor.execute("SELECT pontos FROM jogadores")
     pontos_atualiazados_data = cursor.fetchall()
     for pontos in pontos_atualiazados_data:
-        rank_jogadores.append(int(pontos[0]))
+        rank_pontos.append(int(pontos[0]))
 
-    rank_jogadores.sort() #ordena a lista do maior para o menor
+    rank_pontos.sort() #ordena a lista do maior para o menor
 
 
-    return render_template("torneio.html",rank_jogadores = rank_jogadores, player = player)
+# COLOCA O NOME DE CADA JOGADOR NO RANKING DE ACORDO COM O MAIOR PARA O MENOR
+    rank_jogadores = []
+    rank_vitorias = []
+    cursor.execute("SELECT * FROM jogadores ORDER BY pontos DESC")
+    dados_db  = cursor.fetchall()
+
+    for i in range(len(dados_db)):
+        rank_jogadores.append(dados_db[i][1])
+        rank_vitorias.append(dados_db[i][3])
     
+
+    return render_template("torneio.html",rank_pontos = rank_pontos, player = player, rank_jogadores = rank_jogadores, rank_vitorias = rank_vitorias)
+    
+
+
+
+
+
+
+
 '''init'''
 if __name__ == ("__main__"):
     init_db()
