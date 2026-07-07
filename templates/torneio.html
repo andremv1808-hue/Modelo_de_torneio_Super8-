@@ -27,107 +27,190 @@
     </header>
     <main>
         <div>
-            <!-- <div class="container-button-top">
-                <button class="button-jogos">JOGOS</button>
-                <button class="button-rank">RANKING</button>
-            </div> -->
             <div class="container-tables">
-                <div class="container-tabela1">
-                    <table class="tabela1">
-                        <tr>
-                            <th class="border-radiusUL">Jogo</th>
-                            <th>Equipe 1</th>
-                            <th>Resultado</th>
-                            <th class="border-radiusUR">Equipe 2</th>
-                        </tr>
-                        <tr>
-                            <td>01</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>02</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>03</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>04</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>05</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>06</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>07</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>08</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>09</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>11</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>12</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td>13</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td>{{}} & {{}}</td>
-                        </tr>
-                        <tr>
-                            <td class="border-radiusDL">14</td>
-                            <td>{{}} & {{}}</td>
-                            <td><input type="number"> X <input type="number"></td>
-                            <td class="border-radiusDR">{{}} & {{}}</td>
-                        </tr>
-                    </table>
-                </div>
+                <div class="container-table1">
+                    <form action="/refresh" method="post">
+                        <table class="tabela1">
+                            <tr>
+                                <th class="border-radiusUL">Jogo</th>
+                                <th>Equipe 1</th>
+                                <th>Resultado</th>
+                                <th class="border-radiusUR">Equipe 2</th>
+                            </tr>
+                            <tr>
+                                <td>01</td>     
+                                <td>{{player[0]}} & {{player[7]}}</td>
 
-                <div class="container-tabela2">
+                                <td>
+                                    {%if status[0] == 'False'%}
+                                    <input type="number" name="result"> X <input type="number" name="result">
+                                    {%else%}
+                                    {%if results_on_data[0][0] > results_on_data[0][1] %}
+                                    <span style="color: green;">{{results_on_data[0][0]}}</span>
+                                    <span>X</span>
+                                    <span style="color: red;">{{results_on_data[0][1]}}
+                                    </span>
+                                    <input type="hidden" name="result" value=""><input type="hidden" name="result" value="">
+                                    {%elif results_on_data[0][0] == results_on_data[0][1] %}
+                                    <span style="color: orange;">{{results_on_data[0][0]}}</span>
+                                    <span>X</span>
+                                    <span style="color: orange;">{{results_on_data[0][1]}}</span>
+                                    <input type="hidden" name="result" value=""><input type="hidden" name="result" value="">
+                                    {% else %}
+                                    <span style="color: red;">{{results_on_data[0][0]}}</span>
+                                    <span>X</span>
+                                    <span style="color: green;">{{results_on_data[0][1]}}
+                                    </span>
+                                    <input type="hidden" name="result" value=""><input type="hidden" name="result" value="">
+                                    {%endif%}
+                                    {%endif%}
+                                </td>
+                                <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
+                                <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
+                                <td>{{player[6]}} & {{player[4]}}</td>
+                                <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
+                                <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
+                            </tr>
+                            <tr>
+                                <td>02</td>
+                                <td>{{player[3]}} & {{player[1]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[1] == 'False' else results_on_data[1][0] }}"> X <input type="number" name="result" value="{{ '' if status[1] == 'False' else results_on_data[1][1] }}"></td>
+                                <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
+                                <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
+                                <td>{{player[2]}} & {{player[5]}}</td>
+                                <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
+                                <input type="hidden" id="{{player[5]}}" name="hidden_input" value="{{player[5]}}">
+                            </tr>
+                            <tr>
+                                <td>03</td>
+                                <td>{{player[0]}} & {{player[6]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[2] == 'False' else results_on_data[2][0] }}"> X <input type="number" name="result" value="{{ '' if status[2] == 'False' else results_on_data[2][1] }}"></td>
+                                <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
+                                <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
+                                <td>{{player[1]}} & {{player[2]}}</td>
+                                <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
+                                <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
+                            </tr>
+                            <tr>
+                                <td>04</td>
+                                <td>{{player[7]}} & {{player[4]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[3] == 'False' else results_on_data[3][0] }}"> X <input type="number" name="result" value="{{ '' if status[3] == 'False' else results_on_data[3][1] }}"></td>
+                                <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
+                                <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
+                                <td>{{player[3]}} & {{player[5]}}</td>
+                                <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
+                                <input type="hidden" id="{{player[5]}}" name="hidden_input" value="{{player[5]}}">
+                            </tr>
+                            <tr>
+                                <td>05</td>
+                                <td>{{player[0]}} & {{player[2]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[4] == 'False' else results_on_data[4][0] }}"> X <input type="number" name="result" value="{{ '' if status[4] == 'False' else results_on_data[4][1] }}"></td>
+                                <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
+                                <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
+                                <td>{{player[7]}} & {{player[5]}}</td>
+                                <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
+                                <input type="hidden" id="{{player[5]}}" name="hidden_input" value="{{player[5]}}">
+                            </tr>
+                            <tr>
+                                <td>06</td>
+                                <td>{{player[6]}} & {{player[1]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[5] == 'False' else results_on_data[5][0] }}"> X <input type="number" name="result" value="{{ '' if status[5] == 'False' else results_on_data[5][1] }}"></td>
+                                <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
+                                <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
+                                <td>{{player[4]}} & {{player[3]}}</td>
+                                <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
+                                <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
+                            </tr>
+                            <tr>
+                                <td>07</td>
+                                <td>{{player[0]}} & {{player[4]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[6] == 'False' else results_on_data[6][0] }}"> X <input type="number" name="result" value="{{ '' if status[6] == 'False' else results_on_data[6][1] }}"></td>
+                                <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
+                                <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
+                                <td>{{player[3]}} & {{player[2]}}</td>
+                                <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
+                                <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
+                            </tr>
+                            <tr>
+                                <td>08</td>
+                                <td>{{player[7]}} & {{player[6]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[7] == 'False' else results_on_data[7][0] }}"> X <input type="number" name="result" value="{{ '' if status[7] == 'False' else results_on_data[7][1] }}"></td>
+                                <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
+                                <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
+                                <td>{{player[1]}} & {{player[5]}}</td>
+                                <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
+                                <input type="hidden" id="{{player[5]}}" name="hidden_input" value="{{player[5]}}">
+                            </tr>
+                            <tr>
+                                <td>09</td>
+                                <td>{{player[0]}} & {{player[1]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[8] == 'False' else results_on_data[8][0] }}"> X <input type="number" name="result" value="{{ '' if status[8] == 'False' else results_on_data[8][1] }}"></td>
+                                <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
+                                <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
+                                <td>{{player[7]}} & {{player[3]}}</td>
+                                <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
+                                <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>{{player[6]}} & {{player[2]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[9] == 'False' else results_on_data[9][0] }}"> X <input type="number" name="result" value="{{ '' if status[9] == 'False' else results_on_data[9][1] }}"></td>
+                                <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
+                                <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
+                                <td>{{player[4]}} & {{player[5]}}</td>
+                                <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
+                                <input type="hidden" id="{{player[5]}}" name="hidden_input" value="{{player[5]}}">
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>{{player[0]}} & {{player[3]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[10] == 'False' else results_on_data[10][0] }}"> X <input type="number" name="result" value="{{ '' if status[10] == 'False' else results_on_data[10][1] }}"></td>
+                                <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
+                                <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
+                                <td>{{player[6]}} & {{player[5]}}</td>
+                                <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
+                                <input type="hidden" id="{{player[5]}}" name="hidden_input" value="{{player[5]}}">
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>{{player[7]}} & {{player[1]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[11] == 'False' else results_on_data[11][0] }}"> X <input type="number" name="result" value="{{ '' if status[11] == 'False' else results_on_data[11][1] }}"></td>
+                                <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
+                                <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
+                                <td>{{player[4]}} & {{player[2]}}</td>
+                                <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
+                                <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>{{player[7]}} & {{player[2]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[12] == 'False' else results_on_data[12][0] }}"> X <input type="number" name="result" value="{{ '' if status[12] == 'False' else results_on_data[12][1] }}"></td>
+                                <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
+                                <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
+                                <td>{{player[6]}} & {{player[3]}}</td>
+                                <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
+                                <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
+                            </tr>
+                            <tr>
+                                <td class="border-radiusDL">14</td>
+                                <td>{{player[0]}} & {{player[5]}}</td>
+                                <td><input type="number" name="result" value="{{ '' if status[13] == 'False' else results_on_data[13][0] }}"> X <input type="number" name="result" value="{{ '' if status[13] == 'False' else results_on_data[13][1] }}"></td>
+                                <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
+                                <input type="hidden" id="{{player[5]}}" name="hidden_input" value="{{player[5]}}">
+                                <td class="border-radiusDR">{{player[4]}} & {{player[1]}}</td>
+                                <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
+                                <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
+                            </tr>
+                        </table>
+                    <div class="container-buttons">
+                        <button type="submit" class="button-refresh">Atualizar ranking!</button>
+                        </form>
+                        <form action="/encerrar">
+                            <button type="submit" method="get" class="button-end">Encerrar super 8!</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="container-table2">
                     <table class="tabela2">
                         <tr>
                             <th class="border-radiusUL">Posição</th>
@@ -139,80 +222,70 @@
                         </tr>
                         <tr>
                             <td class="first">01</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{rank_jogadores[0]}}</td>
+                            <td>-00</td>
+                            <td>-00</td>
+                            <td>{{ rank_pontos[7] }}</td>
+                            <td>{{ rank_vitorias[0] }}</td>
                         </tr>
                         <tr>
                             <td class="second">02</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{rank_jogadores[1]}}</td>
+                            <td>-00</td>
+                            <td>-00</td>
+                            <td>{{ rank_pontos[6] }}</td>
+                            <td>{{ rank_vitorias[1] }}</td>
                         </tr>
                         <tr>
                             <td class="third">03</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{rank_jogadores[2]}}</td>
+                            <td>-00</td>
+                            <td>-00</td>
+                            <td>{{ rank_pontos[5] }}</td>
+                            <td>{{ rank_vitorias[2] }}</td>
                         </tr>
                         <tr>
                             <td>04</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{rank_jogadores[3]}}</td>
+                            <td>-00</td>
+                            <td>-00</td>
+                            <td>{{ rank_pontos[4] }}</td>
+                            <td>{{ rank_vitorias[3] }}</td>
                         </tr>
                         <tr>
                             <td>05</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{rank_jogadores[4]}}</td>
+                            <td>-00</td>
+                            <td>-00</td>
+                            <td>{{ rank_pontos[3] }}</td>
+                            <td>{{ rank_vitorias[4] }}</td>
                         </tr>
                         <tr>
                             <td>06</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{rank_jogadores[5]}}</td>
+                            <td>-00</td>
+                            <td>-00</td>
+                            <td>{{ rank_pontos[2] }}</td>
+                            <td>{{ rank_vitorias[5] }}</td>
                         </tr>
                         <tr>
                             <td>07</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
+                            <td>{{rank_jogadores[6]}}</td>
+                            <td>-00</td>
+                            <td>-00</td>
+                            <td>{{ rank_pontos[1] }}</td>
+                            <td>{{ rank_vitorias[6] }}</td>
                         </tr>
                         <tr>
                             <td class="border-radiusDL">08</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td>{{}}</td>
-                            <td class="border-radiusDR">{{}}</td>
+                            <td>{{rank_jogadores[7]}}</td>
+                            <td>-00</td>
+                            <td>-00</td>
+                            <td>{{ rank_pontos[0] }}</td>
+                            <td class="border-radiusDR">{{ rank_vitorias[7] }}</td>
                         </tr>
                     </table>
                 </div>
-            </div>
-
-
-            <div class="container-buttons">
-                <form action="/encerrar">
-                    <button type="submit" method="get" class="button-end">Encerrar super 8!</button>
-                </form>
-                <form action="/encerrar">
-                    <button type="submit" method="get" class="button-end">Atualizar ranking!</button>
-                </form>
             </div>
         </div>
     </main>
