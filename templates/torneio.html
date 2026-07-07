@@ -38,9 +38,33 @@
                                 <th class="border-radiusUR">Equipe 2</th>
                             </tr>
                             <tr>
-                                <td>01</td>
+                                <td>01</td>     
                                 <td>{{player[0]}} & {{player[7]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+
+                                <td>
+                                    {%if status[0] == 'False'%}
+                                    <input type="number" name="result"> X <input type="number" name="result">
+                                    {%else%}
+                                    {%if results_on_data[0][0] > results_on_data[0][1] %}
+                                    <span style="color: green;">{{results_on_data[0][0]}}</span>
+                                    <span>X</span>
+                                    <span style="color: red;">{{results_on_data[0][1]}}
+                                    </span>
+                                    <input type="hidden" name="result" value=""><input type="hidden" name="result" value="">
+                                    {%elif results_on_data[0][0] == results_on_data[0][1] %}
+                                    <span style="color: orange;">{{results_on_data[0][0]}}</span>
+                                    <span>X</span>
+                                    <span style="color: orange;">{{results_on_data[0][1]}}</span>
+                                    <input type="hidden" name="result" value=""><input type="hidden" name="result" value="">
+                                    {% else %}
+                                    <span style="color: red;">{{results_on_data[0][0]}}</span>
+                                    <span>X</span>
+                                    <span style="color: green;">{{results_on_data[0][1]}}
+                                    </span>
+                                    <input type="hidden" name="result" value=""><input type="hidden" name="result" value="">
+                                    {%endif%}
+                                    {%endif%}
+                                </td>
                                 <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
                                 <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
                                 <td>{{player[6]}} & {{player[4]}}</td>
@@ -50,7 +74,7 @@
                             <tr>
                                 <td>02</td>
                                 <td>{{player[3]}} & {{player[1]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[1] == 'False' else results_on_data[1][0] }}"> X <input type="number" name="result" value="{{ '' if status[1] == 'False' else results_on_data[1][1] }}"></td>
                                 <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
                                 <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
                                 <td>{{player[2]}} & {{player[5]}}</td>
@@ -60,7 +84,7 @@
                             <tr>
                                 <td>03</td>
                                 <td>{{player[0]}} & {{player[6]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[2] == 'False' else results_on_data[2][0] }}"> X <input type="number" name="result" value="{{ '' if status[2] == 'False' else results_on_data[2][1] }}"></td>
                                 <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
                                 <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
                                 <td>{{player[1]}} & {{player[2]}}</td>
@@ -70,7 +94,7 @@
                             <tr>
                                 <td>04</td>
                                 <td>{{player[7]}} & {{player[4]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[3] == 'False' else results_on_data[3][0] }}"> X <input type="number" name="result" value="{{ '' if status[3] == 'False' else results_on_data[3][1] }}"></td>
                                 <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
                                 <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
                                 <td>{{player[3]}} & {{player[5]}}</td>
@@ -80,7 +104,7 @@
                             <tr>
                                 <td>05</td>
                                 <td>{{player[0]}} & {{player[2]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[4] == 'False' else results_on_data[4][0] }}"> X <input type="number" name="result" value="{{ '' if status[4] == 'False' else results_on_data[4][1] }}"></td>
                                 <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
                                 <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
                                 <td>{{player[7]}} & {{player[5]}}</td>
@@ -90,7 +114,7 @@
                             <tr>
                                 <td>06</td>
                                 <td>{{player[6]}} & {{player[1]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[5] == 'False' else results_on_data[5][0] }}"> X <input type="number" name="result" value="{{ '' if status[5] == 'False' else results_on_data[5][1] }}"></td>
                                 <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
                                 <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
                                 <td>{{player[4]}} & {{player[3]}}</td>
@@ -100,7 +124,7 @@
                             <tr>
                                 <td>07</td>
                                 <td>{{player[0]}} & {{player[4]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[6] == 'False' else results_on_data[6][0] }}"> X <input type="number" name="result" value="{{ '' if status[6] == 'False' else results_on_data[6][1] }}"></td>
                                 <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
                                 <input type="hidden" id="{{player[4]}}" name="hidden_input" value="{{player[4]}}">
                                 <td>{{player[3]}} & {{player[2]}}</td>
@@ -110,7 +134,7 @@
                             <tr>
                                 <td>08</td>
                                 <td>{{player[7]}} & {{player[6]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[7] == 'False' else results_on_data[7][0] }}"> X <input type="number" name="result" value="{{ '' if status[7] == 'False' else results_on_data[7][1] }}"></td>
                                 <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
                                 <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
                                 <td>{{player[1]}} & {{player[5]}}</td>
@@ -120,7 +144,7 @@
                             <tr>
                                 <td>09</td>
                                 <td>{{player[0]}} & {{player[1]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[8] == 'False' else results_on_data[8][0] }}"> X <input type="number" name="result" value="{{ '' if status[8] == 'False' else results_on_data[8][1] }}"></td>
                                 <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
                                 <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
                                 <td>{{player[7]}} & {{player[3]}}</td>
@@ -130,7 +154,7 @@
                             <tr>
                                 <td>10</td>
                                 <td>{{player[6]}} & {{player[2]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[9] == 'False' else results_on_data[9][0] }}"> X <input type="number" name="result" value="{{ '' if status[9] == 'False' else results_on_data[9][1] }}"></td>
                                 <input type="hidden" id="{{player[6]}}" name="hidden_input" value="{{player[6]}}">
                                 <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
                                 <td>{{player[4]}} & {{player[5]}}</td>
@@ -140,7 +164,7 @@
                             <tr>
                                 <td>11</td>
                                 <td>{{player[0]}} & {{player[3]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[10] == 'False' else results_on_data[10][0] }}"> X <input type="number" name="result" value="{{ '' if status[10] == 'False' else results_on_data[10][1] }}"></td>
                                 <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
                                 <input type="hidden" id="{{player[3]}}" name="hidden_input" value="{{player[3]}}">
                                 <td>{{player[6]}} & {{player[5]}}</td>
@@ -150,7 +174,7 @@
                             <tr>
                                 <td>12</td>
                                 <td>{{player[7]}} & {{player[1]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[11] == 'False' else results_on_data[11][0] }}"> X <input type="number" name="result" value="{{ '' if status[11] == 'False' else results_on_data[11][1] }}"></td>
                                 <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
                                 <input type="hidden" id="{{player[1]}}" name="hidden_input" value="{{player[1]}}">
                                 <td>{{player[4]}} & {{player[2]}}</td>
@@ -160,7 +184,7 @@
                             <tr>
                                 <td>13</td>
                                 <td>{{player[7]}} & {{player[2]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[12] == 'False' else results_on_data[12][0] }}"> X <input type="number" name="result" value="{{ '' if status[12] == 'False' else results_on_data[12][1] }}"></td>
                                 <input type="hidden" id="{{player[7]}}" name="hidden_input" value="{{player[7]}}">
                                 <input type="hidden" id="{{player[2]}}" name="hidden_input" value="{{player[2]}}">
                                 <td>{{player[6]}} & {{player[3]}}</td>
@@ -170,7 +194,7 @@
                             <tr>
                                 <td class="border-radiusDL">14</td>
                                 <td>{{player[0]}} & {{player[5]}}</td>
-                                <td><input type="number" name="result"> X <input type="number" name="result"></td>
+                                <td><input type="number" name="result" value="{{ '' if status[13] == 'False' else results_on_data[13][0] }}"> X <input type="number" name="result" value="{{ '' if status[13] == 'False' else results_on_data[13][1] }}"></td>
                                 <input type="hidden" id="{{player[0]}}" name="hidden_input" value="{{player[0]}}">
                                 <input type="hidden" id="{{player[5]}}" name="hidden_input" value="{{player[5]}}">
                                 <td class="border-radiusDR">{{player[4]}} & {{player[1]}}</td>
