@@ -147,11 +147,11 @@ def button_refresh():
 
 # ATUALIZA O BANCO DE DADOS jogadores COM A SOMA DAS PONTUACOES (USANDO PONTOS CONTRA E PRO)
 
-    for num in range (0, 28, 2):
-        cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
-        ponto = cursor.fetchall()
+    for num in range (0, 27, 2):
         cursor.execute("SELECT nome FROM jogadores WHERE nome IN(?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
         nomes = cursor.fetchall()
+        cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)", (nomes[0][0], nomes[1][0]))
+        ponto = cursor.fetchall()
 
         for i in range(2):
             database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?", ((results[num] - results[num+1]) + int(ponto[i][0]), nomes[i][0]))
@@ -159,10 +159,10 @@ def button_refresh():
         database.commit()
     
     for num in range (1, 28, 2):
-        cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
-        ponto = cursor.fetchall()
         cursor.execute("SELECT nome FROM jogadores WHERE nome IN(?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
         nomes = cursor.fetchall()
+        cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)", (nomes[0][0], nomes[1][0]))
+        ponto = cursor.fetchall()
 
         for i in range(2):
             database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?", ((results[num] - results[num-1]) + int(ponto[i][0]), nomes[i][0]))
