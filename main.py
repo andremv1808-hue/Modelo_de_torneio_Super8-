@@ -48,12 +48,14 @@ def super8():
 
     database.execute("UPDATE jogadores SET pontos = ?", (0,))
     database.execute("UPDATE jogadores SET vitorias = ?", (0,))
+    database.execute("UPDATE jogadores SET pontospro = ?", (0,))
+    database.execute("UPDATE jogadores SET pontoscontra = ?", (0,))
     database.commit()
     
     cursor.execute("SELECT pontos FROM jogadores")
     rank_pontos = cursor.fetchall()
 
-    return render_template("torneio.html", player=player, rank_pontos = just_to_fill3, rank_jogadores = just_to_fill, rank_vitorias = just_to_fill2, results_on_data = results_on_data, status = status)
+    return render_template("torneio.html", player=player, rank_pontos = just_to_fill3, rank_jogadores = just_to_fill, rank_vitorias = just_to_fill2, results_on_data = results_on_data, status = status, rank_ptspro = just_to_fill2, rank_ptscontra = just_to_fill2)
  
 
 
@@ -109,7 +111,7 @@ def button_refresh():
     database.commit()
 
 
-# ATUALIZA O BANCO DE DADOS COM A SOMA DA VITORIA DE CADA UM, SE FOR EMPATE NAO SOMA NADA
+# ATUALIZA O BANCO DE DADOS COM A SOMA DA VITORIA DE CADA UM, SE FOR EMPATE NAO SOMA NADA 
     
     for num in range(0,len(hidden_ids), 2):
         if results[num] == results[num+1]:
@@ -143,15 +145,7 @@ def button_refresh():
     for ponto in pontos_on_data:
         pontos_list.append(int(ponto[0]))
 
-# ATUALIZA O BANCO DE DADOS jogadores COM A SOMA DAS PONTUACOES
-    # for num in range(28):
-    #     cursor.execute("SELECT nome FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
-    #     nome = cursor.fetchall()
-    #     cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
-    #     ponto = cursor.fetchall()
-
-    #     for i in range(2):
-    #         database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?",((results[num] - results[num + 1])+ int(ponto[i][0]), hidden_ids[num][i]))
+# ATUALIZA O BANCO DE DADOS jogadores COM A SOMA DAS PONTUACOES (USANDO PONTOS CONTRA E PRO)
 
     for num in range (0, 28, 2):
         cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
@@ -174,6 +168,46 @@ def button_refresh():
             database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?", ((results[num] - results[num-1]) + int(ponto[i][0]), nomes[i][0]))
 
         database.commit()
+
+# SALVA OS PONTOS PRO E CONTRA 
+    for num in range(0, 28, 2):
+        cursor.execute("SELECT nome FROM jogadores WHERE nome IN(?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
+        nomes = cursor.fetchall()
+
+        cursor.execute("SELECT pontospro FROM jogadores WHERE nome IN (?,?)", (nomes[0][0], nomes[1][0]))
+        pontospro = cursor.fetchall()
+
+        cursor.execute("SELECT pontoscontra FROM jogadores WHERE nome IN (?,?)", (nomes[0][0], nomes[1][0]))
+        pontoscontra = cursor.fetchall()
+
+        for i in range(2):
+            database.execute("UPDATE jogadores SET pontospro = ? WHERE nome = ? ", (results[num] + int(pontospro[i][0]), nomes[i][0]))
+        
+        for i in range(2):
+            database.execute("UPDATE jogadores SET pontoscontra = ? WHERE nome = ? ", (results[num + 1] + int(pontoscontra[i][0]), nomes[i][0]))
+
+        database.commit()
+    
+    for num in range(1, 28, 2):
+        cursor.execute("SELECT nome FROM jogadores WHERE nome IN(?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
+        nomes = cursor.fetchall()
+
+        cursor.execute("SELECT pontospro FROM jogadores WHERE nome IN (?,?)", (nomes[0][0], nomes[1][0]))
+        pontospro = cursor.fetchall()
+        
+        cursor.execute("SELECT pontoscontra FROM jogadores WHERE nome IN (?,?)", (nomes[0][0], nomes[1][0]))
+        pontoscontra = cursor.fetchall()
+        
+        for i in range(2):
+            database.execute("UPDATE jogadores SET pontospro = ? WHERE nome = ? ", (results[num] + int(pontospro[i][0]), nomes[i][0]))
+        
+        for i in range(2):
+            database.execute("UPDATE jogadores SET pontoscontra = ? WHERE nome = ? ", (results[num - 1] + int(pontoscontra[i][0]), nomes[i][0]))
+        
+
+        
+        database.commit()
+
 
 # ATUALIZA O BANDO DE DADOS partidas COM OS RESULTADOS e jogo acontecido
     for i in range (0,28,2):
@@ -203,12 +237,16 @@ def button_refresh():
 # COLOCA O NOME DE CADA JOGADOR NO RANKING DE ACORDO COM O MAIOR PARA O MENOR
     rank_jogadores = []
     rank_vitorias = []
+    rank_ptspro = []
+    rank_ptscontra = []
     cursor.execute("SELECT * FROM jogadores ORDER BY pontos DESC")
     dados_db  = cursor.fetchall()
 
     for i in range(len(dados_db)):
         rank_jogadores.append(dados_db[i][1])
-        rank_vitorias.append(dados_db[i][3])
+        rank_vitorias.append(dados_db[i][5])
+        rank_ptspro.append(dados_db[i][2])
+        rank_ptscontra.append(dados_db[i][3])
     
 # RETORNA O STATUS DOS JOGOS
     cursor.execute("SELECT status FROM partidas")
@@ -224,7 +262,7 @@ def button_refresh():
 
 
 
-    return render_template("torneio.html",rank_pontos = rank_pontos, player = player, rank_jogadores = rank_jogadores, rank_vitorias = rank_vitorias, status = status, results_on_data = results_on_data)
+    return render_template("torneio.html",rank_pontos = rank_pontos, player = player, rank_jogadores = rank_jogadores, rank_vitorias = rank_vitorias, status = status, results_on_data = results_on_data, rank_ptscontra = rank_ptscontra, rank_ptspro = rank_ptspro)
     
 
 
