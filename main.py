@@ -144,14 +144,34 @@ def button_refresh():
         pontos_list.append(int(ponto[0]))
 
 # ATUALIZA O BANCO DE DADOS jogadores COM A SOMA DAS PONTUACOES
-    for num in range(28):
-        cursor.execute("SELECT nome FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
-        nome = cursor.fetchall()
-        cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
+    # for num in range(28):
+    #     cursor.execute("SELECT nome FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
+    #     nome = cursor.fetchall()
+    #     cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)",(hidden_ids[num][0],hidden_ids[num][1]))
+    #     ponto = cursor.fetchall()
+
+    #     for i in range(2):
+    #         database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?",((results[num] - results[num + 1])+ int(ponto[i][0]), hidden_ids[num][i]))
+
+    for num in range (0, 28, 2):
+        cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
         ponto = cursor.fetchall()
+        cursor.execute("SELECT nome FROM jogadores WHERE nome IN(?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
+        nomes = cursor.fetchall()
 
         for i in range(2):
-            database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?",(results[num] + int(ponto[i][0]), nome[i][0]))
+            database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?", ((results[num] - results[num+1]) + int(ponto[i][0]), nomes[i][0]))
+
+        database.commit()
+    
+    for num in range (1, 28, 2):
+        cursor.execute("SELECT pontos FROM jogadores WHERE nome IN (?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
+        ponto = cursor.fetchall()
+        cursor.execute("SELECT nome FROM jogadores WHERE nome IN(?,?)", (hidden_ids[num][0],hidden_ids[num][1]))
+        nomes = cursor.fetchall()
+
+        for i in range(2):
+            database.execute("UPDATE jogadores SET pontos = ? WHERE nome = ?", ((results[num] - results[num-1]) + int(ponto[i][0]), nomes[i][0]))
 
         database.commit()
 
